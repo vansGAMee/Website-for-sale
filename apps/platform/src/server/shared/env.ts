@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-const optionalTrimmed = z.string().trim().min(1).optional();
+const optionalTrimmed = z.preprocess(
+  (value) =>
+    typeof value === "string" && value.trim() === "" ? undefined : value,
+  z.string().trim().min(1).optional(),
+);
 const positiveInt = z.coerce.number().int().positive();
 
 const RuntimeEnvSchema = z.object({
