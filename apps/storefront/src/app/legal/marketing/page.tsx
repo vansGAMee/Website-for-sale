@@ -1,0 +1,2 @@
+import { LegalDocument } from "@/components/legal-document";
+export default function MarketingPage() { return <LegalDocument title="Согласие на рекламные сообщения" version="marketing-v1"><p>Маркетинговое согласие является самостоятельным, необязательным и не влияет на возможность оформить заказ. Чекбокс выключен по умолчанию; выбор фиксируется отдельно.</p><h2>Отзыв</h2><p>Согласие можно отозвать по контактам заведения, указанным на сайте.</p></LegalDocument>; }
