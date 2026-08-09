@@ -12,8 +12,8 @@ import {
   STORE_SEED,
 } from "@mangal/catalog-seed";
 
-const connectionString = process.env.DATABASE_URL;
-if (!connectionString) throw new Error("DATABASE_URL is required to seed PostgreSQL");
+const connectionString = process.env.DIRECT_URL?.trim() || process.env.DATABASE_URL?.trim();
+if (!connectionString) throw new Error("DIRECT_URL or DATABASE_URL is required to seed PostgreSQL");
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString, max: 2 }) });
 
@@ -172,7 +172,7 @@ async function seedLegalDrafts(): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  await prisma.$transaction(async (tx) => {
+  const tx = prisma;
     await tx.storeSettings.upsert({
       where: { id: "singleton" },
       create: {
@@ -221,7 +221,6 @@ async function main(): Promise<void> {
         update: {},
       });
     }
-  });
   if (await prisma.category.count() === 0) await seedCatalog();
   await seedLegalDrafts();
 }

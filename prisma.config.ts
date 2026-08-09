@@ -1,6 +1,7 @@
 import { defineConfig, env } from "prisma/config";
 
-const dbUrl = process.env.DIRECT_URL?.trim() || process.env.DATABASE_URL?.trim() || "postgresql://postgres:postgres@localhost:5432/mangal_dev";
+const dbUrl = process.env.DIRECT_URL?.trim() || process.env.DATABASE_URL?.trim();
+if (!dbUrl) throw new Error("DIRECT_URL or DATABASE_URL is required for Prisma CLI");
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
